@@ -15,18 +15,18 @@ export default function UserForm(props) {
   };
 
   return (
-    <form className="form container" onSubmit={onSubmit}>
-      <div className="form-group submit">
+    <form onSubmit={onSubmit}>
+      <div>
         <h2>Add a User</h2>
 
-        <div className="errors">
+        <div>
           <div>{errors.name}</div>
           <div>{errors.email}</div>
           <div>{errors.password}</div>
         </div>
       </div>
 
-      <div className="form-group inputs">
+      <div>
         <h4>General information</h4>
 
         <label>
