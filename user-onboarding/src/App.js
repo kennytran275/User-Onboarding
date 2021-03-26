@@ -1,7 +1,7 @@
 import "./App.css";
 import UserForm from "./Form";
 import User from "./User";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import * as yup from "yup";
 import schema from "./formSchema";
@@ -20,11 +20,13 @@ const initialFormErrors = {
 };
 
 const initialUsers = [];
+const initialDisabled = true;
 
 function App() {
   const [users, setUsers] = useState(initialUsers); // array
   const [formValues, setFormValues] = useState(initialFormValues); // object
   const [formErrors, setFormErrors] = useState(initialFormErrors); // object
+  const [disabled, setDisabled] = useState(initialDisabled); // boolean
 
   const postNewUser = (newUser) => {
     axios
@@ -71,6 +73,16 @@ function App() {
     postNewUser(newUser);
   };
 
+  useEffect(() => {
+    // 🔥 STEP 9- ADJUST THE STATUS OF `disabled` EVERY TIME `formValues` CHANGES
+    /* We pass the entire state into the entire schema, no need to use reach here. 
+    We want to make sure it is all valid before we allow a user to submit
+    isValid comes from Yup directly */
+    schema.isValid(formValues).then((valid) => {
+      setDisabled(!valid);
+    });
+  }, [formValues]);
+
   return (
     <div className="container">
       <header>
@@ -82,6 +94,7 @@ function App() {
         change={inputChange}
         submit={formSubmit}
         errors={formErrors}
+        disabled={disabled}
       />
 
       {users.map((user) => {

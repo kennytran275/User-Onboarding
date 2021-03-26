@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function UserForm(props) {
-  const { values, submit, change, errors } = props;
+  const { values, submit, change, errors, disabled } = props;
 
   const onSubmit = (evt) => {
     evt.preventDefault();
@@ -73,7 +73,9 @@ export default function UserForm(props) {
         </label>
       </div>
 
-      <button>Submit</button>
+      <button id="submitBtn" disabled={disabled}>
+        Submit
+      </button>
     </form>
   );
 }
